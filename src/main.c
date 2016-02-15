@@ -295,7 +295,6 @@ static bool _idle_clock_digital_create(int width, int height, void *data)
 	appdata *ad = data;
 
 	app_event_handler_h handlers[5] = {NULL, };
-	watch_time_h watch_time = NULL;
 
 	// Register callbacks for each system event
 	if (watch_app_add_event_handler(&handlers[APP_EVENT_LANGUAGE_CHANGED], APP_EVENT_LANGUAGE_CHANGED, NULL, NULL) != APP_ERROR_NONE) {
@@ -643,13 +642,11 @@ static void _idle_clock_digital_app_control(app_control_h app_control, void *dat
 void app_time_tick(watch_time_h watch_time, void* user_data)
 {
 	appdata *ad = user_data;
-
 }
 
 void app_ambient_tick(watch_time_h watch_time, void* user_data)
 {
 	appdata *ad = user_data;
-
 }
 
 void app_ambient_changed(bool ambient_mode, void* user_data)
