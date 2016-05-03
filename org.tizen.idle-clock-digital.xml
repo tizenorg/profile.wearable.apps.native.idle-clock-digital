@@ -9,6 +9,8 @@
 		<privilege>http://tizen.org/privilege/application.launch</privilege>
 	</privileges>
 	<watch-application appid="org.tizen.idle-clock-digital" exec="/usr/apps/org.tizen.idle-clock-digital/bin/idle-clock-digital" ambient-support="true">
+		<category name="org.tizen.wmanager.WATCH_CLOCK"></category>
+		<metadata key="clocktype" value="function"></metadata>
 		<icon>org.tizen.idle-clock-digital.png</icon>
 		<label>Digital clock</label>
 		<label xml:lang="ar-ae">ساعة رقمية</label>
