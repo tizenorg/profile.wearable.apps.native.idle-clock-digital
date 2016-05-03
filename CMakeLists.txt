@@ -20,7 +20,7 @@ SET(DATADIR "/opt/usr/apps/org.${VENDOR}.${PACKAGE}/data")
 SET(LOCALEDIR "${RESDIR}/locale")
 SET(IMAGEDIR "${RESDIR}/images/${PACKAGE}")
 SET(EDJDIR "${RESDIR}/edje")
-SET(SHAREDICONDIR "${PREFIX}/shared/res/icons/default/small")
+SET(SHAREDICONDIR "${PREFIX}/shared/res")
 
 IF("${ARCH}" STREQUAL "arm")
 	OPTION(USE_ARM "Use Arm" ON)

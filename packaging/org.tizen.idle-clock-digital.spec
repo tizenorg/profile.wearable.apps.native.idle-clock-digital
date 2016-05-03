@@ -96,5 +96,5 @@ make_data_directory
 %{PREFIX}/res/*
 #%{PREFIX}/data/*
 /usr/share/packages/org.tizen.idle-clock-digital.xml
-/usr/apps/org.tizen.idle-clock-digital/shared/res/icons/default/small/org.tizen.idle-clock-digital.png
+/usr/apps/org.tizen.idle-clock-digital/shared/res/org.tizen.idle-clock-digital.png
 
