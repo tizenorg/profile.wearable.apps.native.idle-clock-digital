@@ -310,7 +310,7 @@ static i18n_udate_format_h _get_time_formatter(void *data)
 	char a_best_pattern[64] = {0.};
 	char *a_best_pattern_fixed = NULL;
 
-
+	char *saveptr1, *saveptr2;
 	int status = I18N_ERROR_INVALID_PARAMETER;
 
 	i18n_uchar u_pattern[64] = {0,};
@@ -347,8 +347,8 @@ static i18n_udate_format_h _get_time_formatter(void *data)
 	/* remove am/pm of best pattern */
 	retv_if(!i18n_ustring_copy_au(a_best_pattern, u_best_pattern), NULL);
 	_D("best pattern [%s]", a_best_pattern);
-	a_best_pattern_fixed = strtok(a_best_pattern, "a");
-	a_best_pattern_fixed = strtok(a_best_pattern_fixed, " ");
+	a_best_pattern_fixed = strtok_r(a_best_pattern, "a", &saveptr1);
+	a_best_pattern_fixed = strtok_r(a_best_pattern_fixed, " ", &saveptr2);
 	_D("best pattern fixed [%s]", a_best_pattern_fixed);
 
 	if(a_best_pattern_fixed) {
@@ -803,7 +803,7 @@ Eina_Bool clock_view_set_info_time(void *data)
 	char *time_str = NULL;
 
 	tt = time(NULL);
-	ts = localtime(&tt);
+	ts =localtime_r(&tt , ts);
 	retv_if(!ts, ECORE_CALLBACK_RENEW);
 
 	if (ad->timer != NULL) {
@@ -1070,7 +1070,7 @@ static void _device_state_changed_cb(device_callback_e type, void *value, void *
 
 		tt = time(NULL);
 		ret_if(tt == (time_t)-1);
-		ts = localtime(&tt);
+		ts = localtime_r(&tt, ts);
 		ret_if(!ts);
 		if (ad->timer) {
 			ecore_timer_del(ad->timer);
