@@ -88,6 +88,7 @@ static void _clock_font_changed_cb(int node, void *data);
 
 void clock_view_show_clock(void *data)
 {
+	_D("");
 	appdata *ad = data;
 	ret_if(!ad);
 
@@ -99,6 +100,7 @@ void clock_view_show_clock(void *data)
 
 void clock_view_hide_clock(void *data)
 {
+	_D("");
 	appdata *ad = data;
 	ret_if(!ad);
 
@@ -110,6 +112,7 @@ void clock_view_hide_clock(void *data)
 
 void clock_view_set_result_data(void *data)
 {
+	_D("");
 	appdata *ad = data;
 	ret_if(!ad);
 
@@ -135,6 +138,7 @@ void clock_view_set_result_data(void *data)
 
 int clock_view_parse_result_data(const char *result_data)
 {
+	_D("");
 	retv_if(!result_data, -1);
 
 	int i = 0;
@@ -246,6 +250,7 @@ FINISH_OFF:
 
 static char *_get_locale(void)
 {
+	_D("");
 	char *locale = NULL;
 
 	int ret = system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY, &locale);
@@ -783,12 +788,13 @@ static char *_replaceAll(char *s, const char *olds, const char *news)
 
 Eina_Bool clock_view_set_info_time(void *data)
 {
+	_D("");
 	appdata *ad = data;
 	if (!ad) {
 		_D("appdata is NULL");
 		return ECORE_CALLBACK_RENEW;
 	}
-
+	struct tm tempts;
 	struct tm *ts = NULL;
 	time_t tt;
 	int err_code = 0;
@@ -801,9 +807,8 @@ Eina_Bool clock_view_set_info_time(void *data)
 	char utc_time[BUFFER_LENGTH] = { 0 };
 	char utc_ampm[BUFFER_LENGTH] = { 0 };
 	char *time_str = NULL;
-
 	tt = time(NULL);
-	ts =localtime_r(&tt , ts);
+	ts = localtime_r(&tt , &tempts);
 	retv_if(!ts, ECORE_CALLBACK_RENEW);
 
 	if (ad->timer != NULL) {
@@ -882,6 +887,7 @@ Eina_Bool clock_view_set_info_time(void *data)
 
 void clock_view_update_view(void *data)
 {
+	_D("");
 	appdata *ad = data;
 	if (!ad) {
 		_E("appdata is NULL");
@@ -897,6 +903,7 @@ void clock_view_update_view(void *data)
 
 static i18n_uchar *_uastrcpy(const char *chars)
 {
+	_D("");
 	int len = 0;
 	i18n_uchar *str = NULL;
 	len = strlen(chars);
@@ -932,6 +939,7 @@ static void ICU_set_timezone(const char *timezone)
 
 static char* _get_timezone()
 {
+	_D("");
 	char *timezone = NULL;
 
 	int ret = system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_TIMEZONE, &timezone);
@@ -999,6 +1007,7 @@ static void _clear_time(void *data)
 
 static void _clock_font_changed_cb(int node, void *data)
 {
+	_D("");
 	appdata *ad = data;
 	ret_if(!ad);
 
@@ -1042,6 +1051,7 @@ static void _clock_font_changed_cb(int node, void *data)
 
 int clock_view_get_display_state()
 {
+	_D("");
 	display_state_e val;
 	device_display_get_state(&val);
 	_D("DISPLAY STATE [%d]", val);
@@ -1052,17 +1062,27 @@ int clock_view_get_display_state()
 
 static void _device_state_changed_cb(device_callback_e type, void *value, void *data)
 {
+	_D("");
 	appdata *ad = data;
 	ret_if(!ad);
 
 	struct tm *ts = NULL;
 	time_t tt;
+	struct tm tempts;
+	if(type != DEVICE_CALLBACK_DISPLAY_STATE)
+	{
+		_E("Wrong callback was called. check!!!");
+		return;
+	}
+	display_state_e *val = (display_state_e *)value;
+	if(!val)
+	{
+		_E("Changed value is null. Check!!!");
+		return;
+	}
+	_D("DISPLAY STATE [%d] ", *val);
 
-	display_state_e val;
-	device_display_get_state(&val);
-	_D("DISPLAY STATE [%d]", val);
-
-	if(val == DISPLAY_STATE_NORMAL) {
+	if(*val == DISPLAY_STATE_NORMAL) {
 		if(!ad->is_show) {
 			clock_view_set_info_time(ad);
 			clock_view_show_clock(ad);
@@ -1070,7 +1090,7 @@ static void _device_state_changed_cb(device_callback_e type, void *value, void *
 
 		tt = time(NULL);
 		ret_if(tt == (time_t)-1);
-		ts = localtime_r(&tt, ts);
+		ts = localtime_r(&tt, &tempts);
 		ret_if(!ts);
 		if (ad->timer) {
 			ecore_timer_del(ad->timer);
@@ -1078,7 +1098,7 @@ static void _device_state_changed_cb(device_callback_e type, void *value, void *
 		}
 		ad->timer = ecore_timer_add(60 - ts->tm_sec, clock_view_set_info_time, ad);
 	}
-	else if(val == DISPLAY_STATE_SCREEN_OFF) {
+	else if(*val == DISPLAY_STATE_SCREEN_OFF) {
 		//_clear_time(data);	//Disable this code for transit to alpm clock
 	}
 	else
@@ -1154,6 +1174,7 @@ static void _set_settings(void *data)
 
 static void _unset_settings()
 {
+	_D("");
 	int ret = -1;
 
 	/* unset changed cb(time changed) */
@@ -1245,6 +1266,7 @@ static Evas_Object *_add_layout(Evas_Object *parent, const char *file, const cha
 
 void clock_view_destroy_view_main(void *data)
 {
+	_D("");
 	appdata *ad = data;
 	ret_if(!ad);
 
@@ -1264,6 +1286,7 @@ void clock_view_destroy_view_main(void *data)
 
 bool clock_view_create_layout(void *data)
 {
+	_D("");
 	appdata *ad = data;
 	retv_if(!ad, false);
 
