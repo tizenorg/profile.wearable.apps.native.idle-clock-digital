@@ -568,7 +568,7 @@ static void _idle_clock_digital_app_control(app_control_h app_control, void *dat
 				free(result_data);
 
 				if (BUFFER_TYPE_WINDOW == ad->win_type && ad->win) {
-					display_change_state(LCD_NORMAL);
+					device_display_change_state(DISPLAY_STATE_NORMAL);
 				} else {
 					_D("app will be closed");
 					if(close_timer) {
