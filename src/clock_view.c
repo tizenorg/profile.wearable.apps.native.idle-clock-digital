@@ -395,7 +395,7 @@ static i18n_udate_format_h _get_time_formatter_24(void *data)
 
 	char a_best_pattern[64] = {0.};
 	char *a_best_pattern_fixed = NULL;
-
+	char *saveptr1, *saveptr2;
 	int status = I18N_ERROR_INVALID_PARAMETER;
 
 	i18n_uchar u_pattern[64] = {0,};
@@ -431,8 +431,8 @@ static i18n_udate_format_h _get_time_formatter_24(void *data)
 	/* remove am/pm of best pattern */
 	retv_if(!i18n_ustring_copy_au(a_best_pattern, u_best_pattern), NULL);
 	_D("best pattern [%s]", a_best_pattern);
-	a_best_pattern_fixed = strtok(a_best_pattern, "a");
-	a_best_pattern_fixed = strtok(a_best_pattern_fixed, " ");
+	a_best_pattern_fixed = strtok_r(a_best_pattern, "a",&saveptr1);
+	a_best_pattern_fixed = strtok_r(a_best_pattern_fixed, " ",&saveptr2);
 	_D("best pattern fixed [%s]", a_best_pattern_fixed);
 
 	if (a_best_pattern_fixed) {
