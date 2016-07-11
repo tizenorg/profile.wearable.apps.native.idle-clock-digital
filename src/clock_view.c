@@ -1091,8 +1091,10 @@ static void _device_state_changed_cb(device_callback_e type, void *value, void *
 		ad->timer = ecore_timer_add(60 - ts->tm_sec, clock_view_set_info_time, ad);
 	} else if (val == DISPLAY_STATE_SCREEN_OFF) {
 		//_clear_time(data);	//Disable this code for transit to alpm clock
-	} else
+		_D("Display state is off");
+	} else {
 		_D("Not interested PM STATE");
+	}
 }
 
 
