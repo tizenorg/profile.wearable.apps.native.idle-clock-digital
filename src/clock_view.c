@@ -1058,26 +1058,23 @@ static void _device_state_changed_cb(device_callback_e type, void *value, void *
 {
 	_D("");
 	appdata *ad = data;
+	struct tm *ts = NULL;
+	time_t tt;
+	struct tm tempts;
+
 	if (!ad) {
 		_E("ad is null. check!!");
 		return;
 	}
 
-	struct tm *ts = NULL;
-	time_t tt;
-	struct tm tempts;
 	if (type != DEVICE_CALLBACK_DISPLAY_STATE) {
 		_E("Wrong callback was called. check!!!");
 		return;
 	}
-	display_state_e *val = (display_state_e *)value;
-	if (!val) {
-		_E("Changed value is null. Check!!!");
-		return;
-	}
-	_D("DISPLAY STATE [%d] ", *val);
+	display_state_e val = (display_state_e)value;
+	_D("DISPLAY STATE [%d] ", val);
 
-	if (*val == DISPLAY_STATE_NORMAL) {
+	if (val == DISPLAY_STATE_NORMAL) {
 		if (!ad->is_show) {
 			clock_view_set_info_time(ad);
 			clock_view_show_clock(ad);
@@ -1092,7 +1089,7 @@ static void _device_state_changed_cb(device_callback_e type, void *value, void *
 			ad->timer = NULL;
 		}
 		ad->timer = ecore_timer_add(60 - ts->tm_sec, clock_view_set_info_time, ad);
-	} else if (*val == DISPLAY_STATE_SCREEN_OFF) {
+	} else if (val == DISPLAY_STATE_SCREEN_OFF) {
 		//_clear_time(data);	//Disable this code for transit to alpm clock
 	} else
 		_D("Not interested PM STATE");
