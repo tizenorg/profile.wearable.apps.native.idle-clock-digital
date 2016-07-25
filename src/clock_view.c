@@ -395,7 +395,8 @@ static i18n_udate_format_h _get_time_formatter_24(void *data)
 
 	char a_best_pattern[64] = {0.};
 	char *a_best_pattern_fixed = NULL;
-	char *saveptr1, *saveptr2;
+	char *saveptr1=NULL;
+	char *saveptr2=NULL;
 	int status = I18N_ERROR_INVALID_PARAMETER;
 
 	i18n_uchar u_pattern[64] = {0,};
@@ -983,7 +984,7 @@ static void _time_status_changed_cb(system_settings_key_e key, void *data)
 }
 
 
-
+#if 0
 static void _clear_time(void *data)
 {
 	_D("");
@@ -997,7 +998,7 @@ static void _clear_time(void *data)
 		ad->timer = NULL;
 	}
 }
-
+#endif
 
 
 static void _clock_font_changed_cb(int node, void *data)
@@ -1163,7 +1164,7 @@ static void _set_settings(void *data)
 }
 
 
-
+#if 0
 static void _unset_settings()
 {
 	_D("");
@@ -1209,7 +1210,7 @@ static void _unset_settings()
 		_E("Failed to unset preference(font color, %d).", ret);
 	}
 }
-
+#endif
 
 
 static void _set_info(void *data)
