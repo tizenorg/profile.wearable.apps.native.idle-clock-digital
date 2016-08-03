@@ -25,6 +25,7 @@
 
 /* for time variables */
 #include <utils_i18n.h>
+#define MAX_PATH_LEN 1024
 
 typedef struct __appdata
 {

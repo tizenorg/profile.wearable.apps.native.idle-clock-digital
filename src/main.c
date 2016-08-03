@@ -40,10 +40,6 @@
 #define DUMP_FILE_PATH_MINICONTROL		DATA_PATH"/"PACKAGE_NAME"-dump_minicontrol.png"
 #define QUALITY_N_COMPRESS "quality=100 compress=1"
 
-#define WALLPAPER_PATH "/opt/usr/share/settings/Wallpapers/"
-
-
-
 static int drawing_state = 0; // 0: nothing, 1: offscreen capture ongoing, 2: onscreen capture ongoing
 static Ecore_Timer *sync_timer = NULL;
 static Ecore_Timer *drawing_timer = NULL;

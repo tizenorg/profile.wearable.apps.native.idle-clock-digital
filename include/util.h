@@ -26,28 +26,14 @@
 #  define PACKAGE "idle-clock-digital"
 #endif
 
-#if !defined(RESDIR)
-#  define RESDIR "/usr/apps/org.tizen.idle-clock-digital/res"
-#endif
-
-#if !defined(LOCALEDIR)
-#  define LOCALEDIR RESDIR"/locale"
-#endif
-
-#if !defined(EDJDIR)
-#  define EDJDIR RESDIR"/edje"
-#endif
-
 #if !defined(PKGNAME)
 #  define PKGNAME "org.tizen.idle-clock-digital"
 #endif
 
-#define EDJ_APP EDJDIR"/idle-clock-digital.edj"
+#define EDJ_APP "/edje/idle-clock-digital.edj"
 
 #define S_(str) dgettext("sys_string", str)
 #define T_(str) dgettext(PACKAGE, str)
-// already defined in /usr/include/appcore/appcore-common.h:60:0
-//#define N_(str) (str)
 #undef _
 #define _(str) gettext(str)
 

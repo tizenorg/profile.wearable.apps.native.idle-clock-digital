@@ -76,7 +76,6 @@ static char font_color_list[][7] = { "000000", "CEFF00", "FF6519", "BCFFFB", "F0
 #define FONT_DEFAULT_FAMILY_NAME "Tizen:style=Bold"
 #define FONT_DEFAULT_SIZE 80
 
-#define FONTDIR "/usr/apps/org.tizen.idle-clock-digital/res/font"
 #define BUFFER_LENGTH 256
 
 
@@ -1285,8 +1284,11 @@ bool clock_view_create_layout(void *data)
 
 	/* create main layout */
 	Evas_Object *ly_main = NULL;
-
-	ly_main = _add_layout(ad->win, EDJ_APP, "layout_clock_digital");
+	char edj_path[MAX_PATH_LEN]={0,};
+	char *res_path = app_get_resource_path();
+	snprintf(edj_path, MAX_PATH_LEN, "%s%s", res_path, EDJ_APP);
+	_D("edj_path: %s",edj_path);
+	ly_main = _add_layout(ad->win, edj_path, "layout_clock_digital");
 	retv_if(!ly_main, -1);
 	evas_object_size_hint_weight_set(ly_main, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	elm_win_resize_object_add(ad->win, ly_main);
